@@ -12,4 +12,12 @@ export default defineConfig({
       height: 900,
     },
   },
+
+  projects: [
+    {
+      name: 'mtest',
+      // testMatch: '**/*.spec.ts',
+      testMatch: /.*michaelTest\.spec\.ts/,
+    },
+  ]
 });
