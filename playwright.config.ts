@@ -11,7 +11,16 @@ export default defineConfig({
       width: 1440,
       height: 900,
     },
+    launchOptions: {
+      // 關閉瀏覽器自動翻譯提示
+      args: [
+        '--disable-features=Translate',
+        '--disable-translate',
+        '--lang=en-US',
+      ],
+    },
   },
+
 
   projects: [
     {
