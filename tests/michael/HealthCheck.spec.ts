@@ -10,8 +10,8 @@ const LOGIN_URL = `${BASE_URL}/login`;
 const SITE_NAME = 'softpower';
 
 const AUTH = {
-    username: 'michael@softpower.com.tt',      // ← 換成帳號
-    password: '555aaasss',   // ← 換成密碼
+    username: 'aaa',      // ← 換成帳號
+    password: 'bbb',   // ← 換成密碼
 };
 
 // ============================================================
