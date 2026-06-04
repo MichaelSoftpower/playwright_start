@@ -1,6 +1,6 @@
 import { Page, test, expect } from '@playwright/test';
 
-// npx playwright test tests/michaelTest.spec.ts
+// npx playwright test tests/michael/OnlineBooking.spec.ts
 // npx playwright test --project=mtest
 
 test.describe('Online Booking', () => {
