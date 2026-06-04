@@ -20,13 +20,14 @@ export default defineConfig({
       ],
     },
   },
-
-
   projects: [
+    // 以npx playwright test --project=mtest 指令時會執行這個project裡的測試
     {
       name: 'mtest',
-      // testMatch: '**/*.spec.ts',
-      testMatch: /.*michaelTest\.spec\.ts/,
+      // 執行/tests/michael下的測試檔案
+      testDir: './tests/michael',
+      testMatch: '**/michael/**/*.spec.ts',
+      // testMatch:'./tests/michael'
     },
   ]
 });
