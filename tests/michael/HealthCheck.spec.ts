@@ -161,7 +161,6 @@ test.describe('BOS 系統功能健康檢查', () => {
             // 4. 等頁面內 API 資料載入完成
             await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => { });
 
-
             // 5. 截圖（可選，方便人工確認）
             await page.screenshot({
                 path: `test-results/screenshots/${route.name.replace(/\s+/g, '_')}.png`,

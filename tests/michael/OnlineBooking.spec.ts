@@ -3,6 +3,10 @@ import { Page, test, expect } from '@playwright/test';
 // npx playwright test tests/michael/OnlineBooking.spec.ts
 // npx playwright test --project=mtest
 
+const OnlineBooking_URL = 'https://stage5.friendlysky.com/event/heavy-event-aug08-08-08-2026-0930/ticket/seg?e=69m'; // ← 換成測試環境 URL，確保不要指向正式環境
+const testusername = 'michael.lin+03@friendlysky.com';
+const testpassword = '000';
+
 test.describe('Online Booking', () => {
   test('basic workflow', async ({ page }) => {
     // 先從固定Main Event開始，也能用網址直連Event
@@ -17,7 +21,7 @@ test.describe('Online Booking', () => {
     // 選商品Ticket
     // await page.locator('a').filter({ hasText: 'Ticket' }).click();
 
-    await page.goto('https://stage5.friendlysky.com/event/heavy-event-aug08-08-08-2026-0930/ticket/seg?e=69m');
+    await page.goto(OnlineBooking_URL);
     await expect(page).toHaveURL(/\/ticket\/seg/);
     await page.pause()
     // 從指定的Section開始，這邊是用Section名稱來定位，當然也可以用其他元素特徵來定位
@@ -49,8 +53,8 @@ test.describe('Online Booking', () => {
     await expect(page).toHaveURL(/\/login/);
 
     await page.getByRole('textbox', { name: 'Mobile or Email Address' })
-      .fill('michael.lin+03@friendlysky.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('000');
+      .fill(testusername);
+    await page.getByRole('textbox', { name: 'Password' }).fill(testpassword);
     await page.getByRole('button', { name: 'Login' }).click();
     await expect(page).toHaveURL(/\/ticket\/checkout/);
     await page.getByRole('radio', { name: 'Pay with cash' }).click();
