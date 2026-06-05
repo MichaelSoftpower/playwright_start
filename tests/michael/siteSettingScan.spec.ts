@@ -14,6 +14,13 @@ const AUTH = {
 
 test.describe('BOS 掃描Sites Settings', () => {
     test('掃描各個Site的Settings頁面', async ({ page }) => {
+<<<<<<< HEAD
+=======
+        
+        //整體動作較長，先設定timeout值確保能夠獲得sites總數
+        test.setTimeout(60000); // 1分鐘給登入與fetchAllSites
+
+>>>>>>> michael
         // 1. 登入動作
         await easyLogin(page, BASE_URL, AUTH);
 
@@ -21,6 +28,7 @@ test.describe('BOS 掃描Sites Settings', () => {
         const sites = await fetchAllSites(page, BASE_URL);
         console.log(`共找到 ${sites.length} 個 site`);
         // const results = [];
+<<<<<<< HEAD
 
         // 3. 逐一掃描
         for (const site of sites) {
@@ -31,4 +39,20 @@ test.describe('BOS 掃描Sites Settings', () => {
         }
     }
     );
+=======
+        
+        test.setTimeout(sites.length * 30 * 1000); // 一個站給30秒
+        const startFrom = 1;
+
+        // 3. 逐一掃描
+        for (const site of sites.slice(startFrom - 1)) {
+            await navigateToSiteSetting(
+                page,
+                totalDigits,
+                site.id,
+                site.name,
+                BASE_URL);
+        }
+    });
+>>>>>>> michael
 });
