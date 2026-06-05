@@ -1,38 +1,44 @@
 import { Page, test, expect } from '@playwright/test';
 
-// npx playwright test tests/michaelTest.spec.ts
+// npx playwright test tests/michael/OnlineBooking.spec.ts
 // npx playwright test --project=mtest
+
+const MainEvent_URL = 'https://stage5.friendlysky.com/event?e=69m'; // ← 測試Event URL，確保不要指向正式環境 
+const Product_URL = 'https://stage5.friendlysky.com/event/heavy-event-aug08-08-08-2026-0930/ticket/seg?e=69m'; // ← 換成測試環境 URL，確保不要指向正式環境
+const Product_name = 'Ticket';
+const Section_name = 'Section Alpha';
+const ticket_qty = 1;
+const testusername = 'michael.lin+03@friendlysky.com';
+const testpassword = '000';
 
 test.describe('Online Booking', () => {
   test('basic workflow', async ({ page }) => {
-    // 先從固定Main Event開始，也能用網址直連Event
-    // await page.goto('https://stage5.friendlysky.com/event?e=69m');
-    // await page.pause()
+    // 從Main Event開始，也能用網址直連Event
+    // await page.goto(MainEvent_URL);
     // await page.waitForLoadState('networkidle');
+    // 這邊用Event名稱來定位，當然也可以用其他元素特徵來定位
     // await page.getByRole('row', { name: 'Heavy Event Aug.08', exact: true }).click();
-    // 直連Event的話 改goto('https://stage5.friendlysky.com/event/heavy-event-aug08-08-08-2026-0930?e=69m')
     // 這邊拿網址文字比對作為確認是否有連到正確的Event頁面
     // await expect(page).toHaveURL(/heavy-event-aug08-08-08-2026-0930/);
-    // await page.pause()
-    // 選商品Ticket
-    // await page.locator('a').filter({ hasText: 'Ticket' }).click();
-
-    await page.goto('https://stage5.friendlysky.com/event/heavy-event-aug08-08-08-2026-0930/ticket/seg?e=69m');
+    // await page.waitForLoadState('networkidle');
+    // 選商品: Ticket
+    // await page.locator('a').filter({ hasText: Product_name }).click();
+    await page.goto(Product_URL);
     await expect(page).toHaveURL(/\/ticket\/seg/);
     await page.pause()
-    // 從指定的Section開始，這邊是用Section名稱來定位，當然也可以用其他元素特徵來定位
+    // 用Section Name定位
     const panel = page.locator('.cart-panel').filter({
-      has: page.getByText('Section Alpha', { exact: true })
+      has: page.getByText(Section_name, { exact: true })
     });
-    // 選指定的Section div裡面的dropdown點開
-    await panel
+    // 展開Ticket Qty
+      await panel
       .locator('.dropdown')
       .first()
       .click();
     await page.pause()
-
+    // Ticket Qty
     await panel
-      .locator('[data-value="1"]')
+      .locator('[data-value="${ticket_qty}"]')
       .first()
       .click();
 
@@ -49,8 +55,8 @@ test.describe('Online Booking', () => {
     await expect(page).toHaveURL(/\/login/);
 
     await page.getByRole('textbox', { name: 'Mobile or Email Address' })
-      .fill('michael.lin+03@friendlysky.com');
-    await page.getByRole('textbox', { name: 'Password' }).fill('000');
+      .fill(testusername);
+    await page.getByRole('textbox', { name: 'Password' }).fill(testpassword);
     await page.getByRole('button', { name: 'Login' }).click();
     await expect(page).toHaveURL(/\/ticket\/checkout/);
     await page.getByRole('radio', { name: 'Pay with cash' }).click();
