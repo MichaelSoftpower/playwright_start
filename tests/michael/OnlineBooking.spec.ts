@@ -3,8 +3,10 @@ import { Page, test, expect } from '@playwright/test';
 // npx playwright test tests/michael/OnlineBooking.spec.ts
 // npx playwright test --project=mtest
 
-const MainEvent_URL = 'https://stage5.friendlysky.com/event?e=69m'; // ← 測試Event URL，確保不要指向正式環境 
-const Product_URL = 'https://stage5.friendlysky.com/event/heavy-event-aug08-08-08-2026-0930/ticket/seg?e=69m'; // ← 換成測試環境 URL，確保不要指向正式環境
+// Main Event URL，確保不要指向正式環境
+const MainEvent_URL = 'https://stage5.friendlysky.com/event?e=69m';  
+// Event URL，確保不要指向正式環境
+const Product_URL = 'https://stage5.friendlysky.com/event/heavy-event-aug08-08-08-2026-0930/ticket/seg?e=69m'; 
 const Product_name = 'Ticket';
 const Section_name = 'Section Alpha';
 const ticket_qty = 1;

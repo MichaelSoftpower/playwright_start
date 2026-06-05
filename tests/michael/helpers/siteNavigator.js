@@ -5,7 +5,12 @@
 // 4. 拍攝全頁
 // 3. 回到 sites 列表
 
-export async function navigateToSiteSetting(page, siteId ,siteName, baseURL) {
+export async function navigateToSiteSetting(page, sitesTotal, siteId, siteName, baseURL) {
+    const paddedId = String(siteId).padStart(sitesTotal, '0');
+    // 拿site name搜尋，避免翻頁問題
+    await page.getByRole('textbox', { name: 'filter name' }).fill(siteName);
+    await page.getByText("Search").click();
+    console.log(`🔍 掃描 Site: ${paddedId}-${siteName}`);
     await page.waitForSelector('role=cell', { timeout: 10000 });
 
     // 點選對應 site
@@ -15,19 +20,19 @@ export async function navigateToSiteSetting(page, siteId ,siteName, baseURL) {
     // 等待 site context 切換
     await page.waitForTimeout(1000);
 
-    // 導航到 #/settings/site/update
+    // 進入設定頁
     await page.goto(baseURL + '/#/settings/site/update');
     await page.waitForLoadState('networkidle');
 
     // 等待元件讀取完成（依實際元件調整 selector）
     await page.waitForLoadState('networkidle');
+    const fileName = `${paddedId}_${siteName}`;
 
-    // 拍攝全頁
     await page.screenshot({
-        path: `test-results/screenshots/${siteId}_${siteName.replace(/\s+/g, '_')}.png`,
+        path: `test-results/screenshots/${fileName.replace(/\s+/g, '_')}.png`,
         fullPage: true,
     });
-    console.log(`拍攝 ${siteName}`)
+    console.log(`拍攝 ${fileName}`)
 
     // 回到 sites 列表
     await page.goto(`${baseURL}/#/sites`);
