@@ -8,8 +8,8 @@ import { navigateToSiteSetting } from './helpers/siteNavigator'
 const BASE_URL = 'https://stage5.friendlysky.com';  // ← 輸入stage網址
 
 const AUTH = {
-    auUsername: 'michael@softpower.com.tt',   // ← 輸入帳號
-    auPassword: '555aaasss',   // ← 輸入密碼
+    auUsername: '',   // ← 輸入帳號
+    auPassword: '',   // ← 輸入密碼
 };
 
 test.describe('BOS 掃描Sites Settings', () => {
