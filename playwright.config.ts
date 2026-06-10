@@ -1,12 +1,25 @@
 import { defineConfig } from '@playwright/test';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+// 配合.env設定的StageURL，根據命令列/環境變數 STAGE 切換登入環境 URL（1~7）
+// 用法: STAGE=5 npx playwright test 路徑/檔案
+const getBaseURLByStage = () => {
+  const stage = process.env.STAGE || '1';
+  return process.env[`STAGE_${stage}`] || process.env.BASE_URL || 'https://stage.fsky.com/bos';
+};
 
 export default defineConfig({
   testDir: './tests',
-
   timeout: 60000,
-
+  workers: 1,          // 只用一個 worker
+  fullyParallel: false, // 關閉並行
+  globalSetup: './global-setup.ts',
   use: {
     headless: false,
+    baseURL: getBaseURLByStage(),
+    storageState: 'playwright/.auth/user.json',
     viewport: {
       width: 1440,
       height: 900,
@@ -30,4 +43,5 @@ export default defineConfig({
       // testMatch:'./tests/michael'
     },
   ]
-});
+}
+);
