@@ -14,7 +14,7 @@ const AUTH = {
 
 test.describe('BOS 掃描Sites Settings', () => {
     test('掃描各個Site的Settings頁面', async ({ page }) => {
-        
+
         //整體動作較長，先設定timeout值確保能夠獲得sites總數
         test.setTimeout(60000); // 1分鐘給登入與fetchAllSites
 
@@ -23,9 +23,10 @@ test.describe('BOS 掃描Sites Settings', () => {
 
         // 2. 取得所有 site（透過 API 分頁）
         const sites = await fetchAllSites(page, BASE_URL);
+        const totalDigits = String(sites.length).length;
         console.log(`共找到 ${sites.length} 個 site`);
         // const results = [];
-        
+
         test.setTimeout(sites.length * 30 * 1000); // 一個站給30秒
         const startFrom = 1;
 
